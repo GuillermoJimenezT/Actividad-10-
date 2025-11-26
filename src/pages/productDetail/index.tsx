@@ -130,7 +130,6 @@ export default function ProductDetail() {
               <li><strong>Categoría:</strong> {producto.categoria}</li>
               <li><strong>Precio:</strong> ${producto.precio.toFixed(2)}</li>
               <li><strong>Stock disponible:</strong> {producto.stock} unidades</li>
-              {producto.rating && <li><strong>Calificación:</strong> {producto.rating} ⭐</li>}
             </ul>
           </div>
 
