@@ -1,5 +1,6 @@
 import type { Producto } from '../services/ecommerce/productos.services';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
   producto: Producto;
@@ -8,6 +9,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ producto, onAddCart }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddCart = () => {
     if (onAddCart) {
@@ -19,9 +21,13 @@ export default function ProductCard({ producto, onAddCart }: ProductCardProps) {
     setImageError(true);
   };
 
+  const handleViewDetails = () => {
+    navigate(`/producto/${producto.id}`);
+  };
+
   return (
     <div className="card h-100 shadow-sm hover-shadow">
-      <div style={{ height: '200px', overflow: 'hidden', backgroundColor: '#f0f0f0' }}>
+      <div style={{ height: '200px', overflow: 'hidden', backgroundColor: '#f0f0f0', cursor: 'pointer' }} onClick={handleViewDetails}>
         {!imageError && producto.imagen ? (
           <img
             src={producto.imagen}
@@ -37,7 +43,9 @@ export default function ProductCard({ producto, onAddCart }: ProductCardProps) {
         )}
       </div>
       <div className="card-body d-flex flex-column">
-        <h5 className="card-title">{producto.nombre}</h5>
+        <h5 className="card-title" onClick={handleViewDetails} style={{ cursor: 'pointer' }} className="card-title" role="button">
+          {producto.nombre}
+        </h5>
         <p className="card-text text-muted small">{producto.descripcion}</p>
         
         <div className="mt-auto">
@@ -60,6 +68,12 @@ export default function ProductCard({ producto, onAddCart }: ProductCardProps) {
               Agregar
             </button>
           </div>
+          <button
+            className="btn btn-outline-secondary btn-sm w-100 mt-2"
+            onClick={handleViewDetails}
+          >
+            Ver detalles
+          </button>
         </div>
       </div>
     </div>
